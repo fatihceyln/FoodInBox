@@ -11,10 +11,8 @@ class CategoryCell: UICollectionViewCell {
         
     static let reuseID = "CategoryCell"
     
-    private var categoryImageView: UIImageView!
+    private var categoryImageView: FCImageView!
     private var titleLabel: UILabel!
-    
-    private var dataTask: URLSessionDataTask?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,35 +36,21 @@ class CategoryCell: UICollectionViewCell {
         titleLabel.text = nil
         categoryImageView.image = nil
         
-        dataTask?.cancel()
-        dataTask = nil
+        categoryImageView.cancelDownloading()
+        categoryImageView.dataTask = nil
     }
     
     func set(_ categoryData: CategoryData) {
         titleLabel.text = categoryData.name ?? ""
         
-        guard let url = URL(string: categoryData.icon ?? "") else { return }
-        
-        dataTask = URLSession.shared.dataTask(with: url, completionHandler: { [weak self] data, _, _ in
-            guard let self = self else { return }
-            guard let data = data else { return }
-            
-            DispatchQueue.main.async {
-                self.categoryImageView.image = UIImage(data: data)?.withRenderingMode(.alwaysTemplate)
-                self.categoryImageView.tintColor = .white
-            }
-        })
-        
-        dataTask?.resume()
+        if let urlString = categoryData.icon {
+            categoryImageView.downloadImage(urlString: urlString)
+        }
     }
     
     private func configureCategoryImageView() {
-        categoryImageView = UIImageView(frame: .zero)
+        categoryImageView = FCImageView(frame: .zero)
         addSubview(categoryImageView)
-        
-        categoryImageView.translatesAutoresizingMaskIntoConstraints = false
-        categoryImageView.layer.cornerRadius = 10
-        categoryImageView.clipsToBounds = true
         
         NSLayoutConstraint.activate([
             categoryImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
