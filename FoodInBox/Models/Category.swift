@@ -11,7 +11,7 @@ struct Category: Codable {
     let data: [CategoryData]?
 }
 
-struct CategoryData: Codable {
+struct CategoryData: Codable, Equatable {
     let categoryID, name: String?
     let icon: String?
     let totalProducts: Int?

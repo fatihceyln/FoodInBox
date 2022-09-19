@@ -43,6 +43,10 @@ class HomeScreen: UIViewController {
             // Update UI
             self?.categoriesView.collectionView.reloadData()
         }
+        
+        viewModel.categories.bind { [weak self] _ in
+            guard let _ = self else { return }
+        }
     }
     
     private func configureScrollView() {
@@ -89,7 +93,28 @@ extension HomeScreen: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseID, for: indexPath) as! CategoryCell
         cell.set(viewModel.categories.value[indexPath.row])
+        if viewModel.selectedCategory.value == viewModel.categories.value[indexPath.row] {
+            cell.backgroundColor = .orange
+        }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if viewModel.selectedCategory.value != viewModel.categories.value[indexPath.row] {
+            print(indexPath)
+            let cellWillBeActive = collectionView.cellForItem(at: indexPath) as! CategoryCell
+            cellWillBeActive.backgroundColor = .orange
+            
+            guard let previousCategory = viewModel.selectedCategory.value else { return }
+            guard let previousCategoryIndex = viewModel.categories.value.firstIndex(of: previousCategory) else { return }
+            let previousIndexPath = IndexPath(row: previousCategoryIndex, section: 0)
+            
+            if let cellWillBeDeactive = collectionView.cellForItem(at: previousIndexPath) as? CategoryCell {
+                cellWillBeDeactive.backgroundColor = .systemGray6
+            }
+            
+            viewModel.selectedCategory.value = viewModel.categories.value[indexPath.row]
+        }
     }
 }
