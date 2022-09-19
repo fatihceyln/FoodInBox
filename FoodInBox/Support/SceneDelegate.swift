@@ -20,7 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = HomeScreen()
+        
+        let service = CategoryService(urlString: APIUrls.categories)
+        
+        window?.rootViewController = HomeScreen(service: service)
         window?.makeKeyAndVisible()
     }
 

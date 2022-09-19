@@ -8,7 +8,7 @@
 import Foundation
 
 enum APIUrls {
-    private static let baseURL = "https://api.shopiroller.com/v2.0/"
+    private static let baseURL = "https://api.shopiroller.com/v2.0"
     
     static let categories = "\(baseURL)/categories"
     
