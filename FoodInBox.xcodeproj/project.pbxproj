@@ -16,6 +16,8 @@
 		3D6E7BB028D89AFA005B250A /* FCError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E7BAF28D89AFA005B250A /* FCError.swift */; };
 		3D6E7BB228D89E1F005B250A /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E7BB128D89E1F005B250A /* Category.swift */; };
 		3D6E7BB428D89F2B005B250A /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E7BB328D89F2B005B250A /* Product.swift */; };
+		3D6E7BB628D8A331005B250A /* APIUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E7BB528D8A331005B250A /* APIUrls.swift */; };
+		3D6E7BB828D8A47A005B250A /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E7BB728D8A47A005B250A /* CategoryService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		3D6E7BAF28D89AFA005B250A /* FCError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCError.swift; sourceTree = "<group>"; };
 		3D6E7BB128D89E1F005B250A /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		3D6E7BB328D89F2B005B250A /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		3D6E7BB528D8A331005B250A /* APIUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIUrls.swift; sourceTree = "<group>"; };
+		3D6E7BB728D8A47A005B250A /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +66,10 @@
 		3D6E7B9028D89851005B250A /* FoodInBox */ = {
 			isa = PBXGroup;
 			children = (
-				3D6E7BA928D8999B005B250A /* Core */,
 				3D6E7BA828D89996005B250A /* Models */,
-				3D6E7BA728D89991005B250A /* Services */,
 				3D6E7BA628D89987005B250A /* Utilities */,
+				3D6E7BA728D89991005B250A /* Services */,
+				3D6E7BA928D8999B005B250A /* Core */,
 				3D6E7BA528D89966005B250A /* Support */,
 			);
 			path = FoodInBox;
@@ -89,6 +93,7 @@
 			children = (
 				3D6E7BAD28D89A94005B250A /* NetworkingManager.swift */,
 				3D6E7BAF28D89AFA005B250A /* FCError.swift */,
+				3D6E7BB528D8A331005B250A /* APIUrls.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -96,6 +101,7 @@
 		3D6E7BA728D89991005B250A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3D6E7BB728D8A47A005B250A /* CategoryService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -210,8 +216,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D6E7BB628D8A331005B250A /* APIUrls.swift in Sources */,
 				3D6E7B9628D89851005B250A /* ViewController.swift in Sources */,
 				3D6E7BAE28D89A94005B250A /* NetworkingManager.swift in Sources */,
+				3D6E7BB828D8A47A005B250A /* CategoryService.swift in Sources */,
 				3D6E7B9228D89851005B250A /* AppDelegate.swift in Sources */,
 				3D6E7B9428D89851005B250A /* SceneDelegate.swift in Sources */,
 				3D6E7BB028D89AFA005B250A /* FCError.swift in Sources */,
