@@ -44,8 +44,9 @@ class HomeScreen: UIViewController {
             self?.categoriesView.collectionView.reloadData()
         }
         
-        viewModel.categories.bind { [weak self] _ in
+        viewModel.selectedCategory.bind { [weak self] _ in
             guard let _ = self else { return }
+            
         }
     }
     
