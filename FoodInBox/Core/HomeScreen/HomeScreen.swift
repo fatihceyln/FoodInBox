@@ -11,7 +11,9 @@ class HomeScreen: UIViewController {
     
     private let viewModel: HomeViewModel
     
-    private var categoriesCollectionView: UICollectionView!
+    private var scrollView: UIScrollView!
+    private var stackView: UIStackView!
+    private var categoriesView: CategoriesView!
     
     init(service: CategoryService) {
         viewModel = HomeViewModel(service: service)
@@ -26,58 +28,56 @@ class HomeScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureVC()
-        configureCategoriesCollectionView()
+        configureScrollView()
+        configureStackView()
+        configureCategoriesView()
         
         addBinders()
-        
         viewModel.getCategories()
     }
     
     private func addBinders() {
         viewModel.categories.bind { [weak self] _ in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             
             // Update UI
-            
-            self.categoriesCollectionView.reloadData()
-            
+            self?.categoriesView.collectionView.reloadData()
         }
     }
     
-    private func configureVC() {
-        view.backgroundColor = .systemBackground
+    private func configureScrollView() {
+        scrollView = UIScrollView(frame: .zero)
+        view.addSubview(scrollView)
+        
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
+        
+        scrollView.pinToEdges(of: view)
     }
     
-    private func configureCategoriesCollectionView() {
-        categoriesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureFlowLayout())
-        view.addSubview(categoriesCollectionView)
+    private func configureStackView() {
+        stackView = UIStackView()
+        scrollView.addSubview(stackView)
         
-        categoriesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        categoriesCollectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseID)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        categoriesCollectionView.dataSource = self
-        categoriesCollectionView.delegate = self
-        categoriesCollectionView.showsHorizontalScrollIndicator = false
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
         
-        NSLayoutConstraint.activate([
-            categoriesCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            categoriesCollectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            categoriesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            categoriesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            categoriesCollectionView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2)
-        ])
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        
+        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
     
-    private func configureFlowLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let itemWidth = UIScreen.main.bounds.width / 2.5
+    private func configureCategoriesView() {
+        categoriesView = CategoriesView(frame: .zero)
+        stackView.addArrangedSubview(categoriesView)
         
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.1)
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        
-        return layout
+        categoriesView.collectionView.delegate = self
+        categoriesView.collectionView.dataSource = self
+        categoriesView.setTitle("Categories")
     }
 }
 
