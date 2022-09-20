@@ -17,8 +17,8 @@ class ProductsViewModel {
         self.service = service
     }
     
-    func getProducts() {
-        service.downloadProducts { [weak self] returnedProducts in
+    func getProducts(urlString: String) {
+        service.downloadProducts(urlString: urlString) { [weak self] returnedProducts in
             guard let self = self else { return }
             
             DispatchQueue.main.async {

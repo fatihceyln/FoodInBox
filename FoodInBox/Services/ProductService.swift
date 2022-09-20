@@ -9,13 +9,7 @@ import Foundation
 
 class ProductService {
     
-    let urlString: String
-    
-    init(urlString: String) {
-        self.urlString = urlString
-    }
-    
-    func downloadProducts(completion: @escaping ([ProductData]) -> ()) {
+    func downloadProducts(urlString: String, completion: @escaping ([ProductData]) -> ()) {
         guard let url = URL(string: urlString) else { return }
         
         NetworkingManager.shared.download(url: url) { [weak self] result in

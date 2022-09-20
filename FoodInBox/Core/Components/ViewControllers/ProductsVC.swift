@@ -32,7 +32,6 @@ class ProductsVC: UIViewController {
         activityIndicator.startAnimating()
         
         addBinder()
-        viewModel.getProducts()
     }
     
     private func addBinder() {

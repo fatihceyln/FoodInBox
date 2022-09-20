@@ -59,8 +59,7 @@ class HomeScreen: UIViewController {
             guard let self = self else { return }
             
             guard let categoryId = selectedCategory?.categoryID else { return }
-            let productService = ProductService(urlString: APIUrls.products(categoryId: categoryId))
-            self.add(childVC: ProductsVC(service: productService), to: self.productsView)
+            self.productsVC.viewModel.getProducts(urlString: APIUrls.products(categoryId: categoryId))
         }
     }
     
@@ -70,6 +69,9 @@ class HomeScreen: UIViewController {
         
         stackView.setCustomSpacing(80, after: categoriesView)
         stackView.addArrangedSubview(productsView)
+        
+        productsVC = ProductsVC(service: ProductService())
+        add(childVC: productsVC, to: productsView)
     }
     
     private func configureScrollView() {
