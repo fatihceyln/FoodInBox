@@ -56,8 +56,7 @@ class ProductCell: UICollectionViewCell {
     
     func set(_ product: ProductData) {
         titleLabel.text = product.title
-        priceLabel.text = formatter.string(from: NSNumber(value: product.price ?? 0))
-        priceLabel.text?.append(" ₺")
+        priceLabel.text = formatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
         productImageView.downloadImage(urlString: product.images?.first?.n ?? "", renderingMode: .alwaysOriginal)
         
         if let campaingPrice = product.campaignPrice {
@@ -67,8 +66,7 @@ class ProductCell: UICollectionViewCell {
             priceLabel.textAlignment = .left
             
             campaingPriceLabel.alpha = 1
-            campaingPriceLabel.text = formatter.string(from: NSNumber(value: campaingPrice))
-            campaingPriceLabel.text?.append(" ₺")
+            campaingPriceLabel.text = formatter.string(from: NSNumber(value: campaingPrice))?.asTRYCurrency()
         }
     }
     

@@ -11,6 +11,7 @@ class HomeViewModel {
     
     var categories: Observable<[CategoryData]> = Observable([])
     var selectedCategory: Observable<CategoryData?> = Observable(nil)
+    var isLoadingProducts: Bool = false
     
     private let service: CategoryService
     

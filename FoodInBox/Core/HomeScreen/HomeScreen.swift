@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeScreen: UIViewController {
+class HomeScreen: FCDataLoadingVC {
     
     private let viewModel: HomeViewModel
     
@@ -34,11 +34,26 @@ class HomeScreen: UIViewController {
         configureScrollView()
         configureStackView()
         configureCategoriesView()
+        configureProductsView()
         
         addBinders()
-        viewModel.getCategories()
+        getNecessaryDataForView()
+    }
+    
+    private func addBinders() {
+        viewModel.categories.bind { [weak self] _ in
+            guard let self = self else { return }
+            
+            self.categoriesView.collectionView.reloadData()
+        }
         
-        configureProductsView()
+        viewModel.selectedCategory.bind { [weak self] selectedCategory in
+            guard let self = self else { return }
+            
+            guard let categoryId = selectedCategory?.categoryID else { return }
+            self.productsVC.viewModel.getProducts(urlString: APIUrls.products(categoryId: categoryId))
+            self.showLoadingView()
+        }
     }
     
     private func add(childVC: UIViewController, to containerView: UIView) {
@@ -47,34 +62,15 @@ class HomeScreen: UIViewController {
         childVC.view.frame = containerView.bounds
         childVC.didMove(toParent: self)
     }
-    
-    private func addBinders() {
-        viewModel.categories.bind { [weak self] _ in
-            guard let _ = self else { return }
-            
-            self?.categoriesView.collectionView.reloadData()
-        }
-        
-        viewModel.selectedCategory.bind { [weak self] selectedCategory in
-            guard let self = self else { return }
-            
-            guard let categoryId = selectedCategory?.categoryID else { return }
-            self.productsVC.viewModel.getProducts(urlString: APIUrls.products(categoryId: categoryId))
-            self.productsVC.showLoadingView()
-        }
+}
+
+extension HomeScreen {
+    private func getNecessaryDataForView() {
+        viewModel.getCategories()
     }
-    
-    private func configureProductsView() {
-        productsView = UIView(frame: .zero)
-        productsView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 1).isActive = true
-        
-        stackView.setCustomSpacing(80, after: categoriesView)
-        stackView.addArrangedSubview(productsView)
-        
-        productsVC = ProductsVC(service: ProductService())
-        add(childVC: productsVC, to: productsView)
-    }
-    
+}
+
+extension HomeScreen {
     private func configureScrollView() {
         scrollView = UIScrollView(frame: .zero)
         view.addSubview(scrollView)
@@ -110,13 +106,24 @@ class HomeScreen: UIViewController {
         categoriesView.collectionView.dataSource = self
         categoriesView.setTitle("Categories")
     }
+    
+    private func configureProductsView() {
+        productsView = UIView(frame: .zero)
+        productsView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 1).isActive = true
+        
+        stackView.setCustomSpacing(80, after: categoriesView)
+        stackView.addArrangedSubview(productsView)
+        
+        productsVC = ProductsVC(service: ProductService(), delegate: self)
+        add(childVC: productsVC, to: productsView)
+    }
 }
 
 extension HomeScreen: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.categories.value.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseID, for: indexPath) as! CategoryCell
         cell.set(viewModel.categories.value[indexPath.row])
@@ -141,6 +148,14 @@ extension HomeScreen: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             
             viewModel.selectedCategory.value = viewModel.categories.value[indexPath.row]
+        }
+    }
+}
+
+extension HomeScreen: ProductsVCDelegate {
+    func loadingStatusChanged(_ status: LoadingStatus) {
+        if status == .finished {
+            dismissLoadingView()
         }
     }
 }

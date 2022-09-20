@@ -7,14 +7,26 @@
 
 import UIKit
 
-class ProductsVC: FCDataLoadingVC {
+enum LoadingStatus {
+    case loading, finished
+}
+
+protocol ProductsVCDelegate: AnyObject {
+    func loadingStatusChanged(_ status: LoadingStatus)
+}
+
+class ProductsVC: UIViewController {
     
     let viewModel: ProductsViewModel
     private var collectionView: UICollectionView!
     
-    init(service: ProductService) {
+    private weak var delegate: ProductsVCDelegate!
+    
+    init(service: ProductService, delegate: ProductsVCDelegate) {
         viewModel = ProductsViewModel(service: service)
         super.init(nibName: nil, bundle: nil)
+        
+        self.delegate = delegate
     }
     
     required init?(coder: NSCoder) {
@@ -32,8 +44,8 @@ class ProductsVC: FCDataLoadingVC {
     private func addBinder() {
         viewModel.products.bind { [weak self] returnedProducts in
             guard let self = self else { return }
-            
-            self.dismissLoadingView()
+        
+            self.delegate.loadingStatusChanged(.finished)
             self.collectionView.reloadData()
             self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: true)
         }

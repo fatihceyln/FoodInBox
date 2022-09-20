@@ -32,6 +32,7 @@
 		3DD89D0628D9F22A00BCFC7A /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0528D9F22A00BCFC7A /* ProductCell.swift */; };
 		3DD89D0928DA29EF00BCFC7A /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0828DA29EF00BCFC7A /* UILabel+Ext.swift */; };
 		3DD89D0B28DA2B8300BCFC7A /* FCDataLoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0A28DA2B8300BCFC7A /* FCDataLoadingVC.swift */; };
+		3DD89D0E28DA3ACA00BCFC7A /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0D28DA3ACA00BCFC7A /* String+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		3DD89D0528D9F22A00BCFC7A /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		3DD89D0828DA29EF00BCFC7A /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		3DD89D0A28DA2B8300BCFC7A /* FCDataLoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCDataLoadingVC.swift; sourceTree = "<group>"; };
+		3DD89D0D28DA3ACA00BCFC7A /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 			children = (
 				3D04550F28D8E66E001B601C /* UIView+Ext.swift */,
 				3DD89D0828DA29EF00BCFC7A /* UILabel+Ext.swift */,
+				3DD89D0D28DA3ACA00BCFC7A /* String+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				3D04551928D8F2F7001B601C /* CacheManager.swift in Sources */,
 				3D04551E28D8FCB5001B601C /* ProductService.swift in Sources */,
 				3D04551728D8F247001B601C /* FCImageView.swift in Sources */,
+				3DD89D0E28DA3ACA00BCFC7A /* String+Ext.swift in Sources */,
 				3D6E7BB828D8A47A005B250A /* CategoryService.swift in Sources */,
 				3D04551028D8E66E001B601C /* UIView+Ext.swift in Sources */,
 				3D6E7B9228D89851005B250A /* AppDelegate.swift in Sources */,
