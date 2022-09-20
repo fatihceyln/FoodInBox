@@ -7,13 +7,10 @@
 
 import UIKit
 
-class ProductsVC: UIViewController {
+class ProductsVC: FCDataLoadingVC {
     
     let viewModel: ProductsViewModel
-    
     private var collectionView: UICollectionView!
-    
-    private var activityIndicator: UIActivityIndicatorView!
     
     init(service: ProductService) {
         viewModel = ProductsViewModel(service: service)
@@ -28,8 +25,6 @@ class ProductsVC: UIViewController {
         super.viewDidLoad()
 
         configureCollectionView()
-        configureActivityIndicator()
-        activityIndicator.startAnimating()
         
         addBinder()
     }
@@ -38,8 +33,8 @@ class ProductsVC: UIViewController {
         viewModel.products.bind { [weak self] returnedProducts in
             guard let self = self else { return }
             
+            self.dismissLoadingView()
             self.collectionView.reloadData()
-            self.activityIndicator.stopAnimating()
             self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: true)
         }
     }
@@ -56,19 +51,6 @@ class ProductsVC: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         
         collectionView.pinToEdges(of: view)
-    }
-    
-    private func configureActivityIndicator() {
-        activityIndicator = UIActivityIndicatorView(frame: view.bounds)
-        view.addSubview(activityIndicator)
-        
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
     }
 }
 

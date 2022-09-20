@@ -60,6 +60,7 @@ class HomeScreen: UIViewController {
             
             guard let categoryId = selectedCategory?.categoryID else { return }
             self.productsVC.viewModel.getProducts(urlString: APIUrls.products(categoryId: categoryId))
+            self.productsVC.showLoadingView()
         }
     }
     

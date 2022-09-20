@@ -31,6 +31,7 @@
 		3D6E7BC128D8AE2A005B250A /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E7BC028D8AE2A005B250A /* CategoryCell.swift */; };
 		3DD89D0628D9F22A00BCFC7A /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0528D9F22A00BCFC7A /* ProductCell.swift */; };
 		3DD89D0928DA29EF00BCFC7A /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0828DA29EF00BCFC7A /* UILabel+Ext.swift */; };
+		3DD89D0B28DA2B8300BCFC7A /* FCDataLoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0A28DA2B8300BCFC7A /* FCDataLoadingVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		3D6E7BC028D8AE2A005B250A /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		3DD89D0528D9F22A00BCFC7A /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
 		3DD89D0828DA29EF00BCFC7A /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		3DD89D0A28DA2B8300BCFC7A /* FCDataLoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCDataLoadingVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +103,8 @@
 		3D04551A28D8F72B001B601C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				3D04551B28D8F745001B601C /* ProductsVC.swift */,
-				3D04551F28D8FD62001B601C /* ProductsViewModel.swift */,
+				3DD89D0A28DA2B8300BCFC7A /* FCDataLoadingVC.swift */,
+				3DD89D0C28DA2C2800BCFC7A /* Products */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -225,6 +227,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		3DD89D0C28DA2C2800BCFC7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3D04551B28D8F745001B601C /* ProductsVC.swift */,
+				3D04551F28D8FD62001B601C /* ProductsViewModel.swift */,
+			);
+			path = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,6 +324,7 @@
 				3D6E7BBA28D8A774005B250A /* HomeScreen.swift in Sources */,
 				3D6E7BBC28D8A7EA005B250A /* Observable.swift in Sources */,
 				3D6E7BB028D89AFA005B250A /* FCError.swift in Sources */,
+				3DD89D0B28DA2B8300BCFC7A /* FCDataLoadingVC.swift in Sources */,
 				3D6E7BB228D89E1F005B250A /* Category.swift in Sources */,
 				3D6E7BB428D89F2B005B250A /* Product.swift in Sources */,
 				3D04552028D8FD62001B601C /* ProductsViewModel.swift in Sources */,
