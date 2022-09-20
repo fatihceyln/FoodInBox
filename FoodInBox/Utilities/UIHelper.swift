@@ -23,7 +23,7 @@ enum UIHelper {
         let itemWidth = UIScreen.main.bounds.width / 3
         
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.4)
         
         return layout
     }

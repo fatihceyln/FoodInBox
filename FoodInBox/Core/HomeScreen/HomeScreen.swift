@@ -66,7 +66,7 @@ class HomeScreen: UIViewController {
     
     private func configureProductsView() {
         productsView = UIView(frame: .zero)
-        productsView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.9).isActive = true
+        productsView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 1).isActive = true
         
         stackView.setCustomSpacing(80, after: categoriesView)
         stackView.addArrangedSubview(productsView)

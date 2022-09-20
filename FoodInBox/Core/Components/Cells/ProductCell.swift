@@ -14,10 +14,14 @@ class ProductCell: UICollectionViewCell {
     private var productImageView: FCImageView!
     private var titleLabel: UILabel!
     private var priceLabel: UILabel!
+    private var campaingPriceLabel: UILabel!
     
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
+        formatter.currencySymbol = ""
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
         
         return formatter
     }
@@ -46,7 +50,22 @@ class ProductCell: UICollectionViewCell {
     func set(_ product: ProductData) {
         titleLabel.text = product.title
         priceLabel.text = formatter.string(from: NSNumber(value: product.price ?? 0))
+        priceLabel.text?.append(" ₺")
         productImageView.downloadImage(urlString: product.images?.first?.n ?? "", renderingMode: .alwaysOriginal)
+        
+        if let campaingPrice = product.campaignPrice {
+            let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: formatter.string(from: NSNumber(value: product.price ?? 0))!)
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
+            
+            priceLabel.attributedText = attributeString
+            priceLabel.text?.append(" ₺")
+            priceLabel.font = .systemFont(ofSize: 16)
+            priceLabel.textAlignment = .left
+            
+            configureCampaingPriceLabel()
+            campaingPriceLabel.text = formatter.string(from: NSNumber(value: campaingPrice))
+            campaingPriceLabel.text?.append(" ₺")
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -70,7 +89,7 @@ class ProductCell: UICollectionViewCell {
         addSubview(titleLabel)
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.font = .boldSystemFont(ofSize: 18)
         titleLabel.textAlignment = .center
         
         NSLayoutConstraint.activate([
@@ -93,6 +112,22 @@ class ProductCell: UICollectionViewCell {
             priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             priceLabel.leadingAnchor.constraint(equalTo: productImageView.leadingAnchor),
             priceLabel.trailingAnchor.constraint(equalTo: productImageView.trailingAnchor)
+        ])
+    }
+    
+    private func configureCampaingPriceLabel() {
+        campaingPriceLabel = UILabel(frame: .zero)
+        addSubview(campaingPriceLabel)
+        
+        campaingPriceLabel.translatesAutoresizingMaskIntoConstraints = false
+        campaingPriceLabel.font = .boldSystemFont(ofSize: 24)
+        campaingPriceLabel.textAlignment = .right
+        campaingPriceLabel.textColor = .systemGreen
+        
+        NSLayoutConstraint.activate([
+            campaingPriceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
+            campaingPriceLabel.leadingAnchor.constraint(equalTo: productImageView.leadingAnchor),
+            campaingPriceLabel.trailingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: -10)
         ])
     }
 }
