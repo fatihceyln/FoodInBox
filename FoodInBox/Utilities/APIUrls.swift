@@ -13,7 +13,7 @@ enum APIUrls {
     static let categories = "\(baseURL)/categories"
     
     static func products(categoryId: String) -> String {
-        "\(baseURL)/advanced-filtered?categoryId=\(categoryId)"
+        "\(baseURL)/products/advanced-filtered?categoryId=\(categoryId)"
     }
     
     static func product(productId: String) -> String {

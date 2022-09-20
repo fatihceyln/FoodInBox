@@ -15,6 +15,9 @@ class HomeScreen: UIViewController {
     private var stackView: UIStackView!
     private var categoriesView: CategoriesView!
     
+    private var productsView: UIView!
+    private var productsVC: ProductsVC!
+    
     init(service: CategoryService) {
         viewModel = HomeViewModel(service: service)
         
@@ -34,6 +37,19 @@ class HomeScreen: UIViewController {
         
         addBinders()
         viewModel.getCategories()
+        
+        productsView = UIView(frame: .zero)
+        stackView.addArrangedSubview(productsView)
+        
+        productsView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        
+    }
+    
+    private func add(childVC: UIViewController, to containerView: UIView) {
+        addChild(childVC)
+        containerView.addSubview(childVC.view)
+        childVC.view.frame = containerView.bounds
+        childVC.didMove(toParent: self)
     }
     
     private func addBinders() {
@@ -44,9 +60,10 @@ class HomeScreen: UIViewController {
             self?.categoriesView.collectionView.reloadData()
         }
         
-        viewModel.selectedCategory.bind { [weak self] _ in
-            guard let _ = self else { return }
+        viewModel.selectedCategory.bind { [weak self] selectedCategory in
+            guard let self = self else { return }
             
+            self.add(childVC: ProductsVC(service: ProductService(urlString: APIUrls.products(categoryId: self.viewModel.selectedCategory.value?.categoryID ?? ""))), to: self.productsView)
         }
     }
     

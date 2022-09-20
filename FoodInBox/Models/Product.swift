@@ -12,26 +12,19 @@ struct Product: Codable {
 }
 
 struct ProductData: Codable {
-    let id, appID: String?
-    let category: CategoryData?
-    let categoryID: String?
+    let id: String?
     let title: String?
     let images: [Icon]?
     let description: String?
-    let stock: Int?
-    let stockCode: String?
     let price: Int?
-    let campaignPrice, shippingPrice: Int?
+    let campaignPrice, shippingPrice: Double?
     let createDate: String?
 
     enum CodingKeys: String, CodingKey {
         case id
-        case appID = "appId"
-        case category
-        case categoryID = "categoryId"
         case title, images
         case description
-        case stock, stockCode, price, campaignPrice, shippingPrice, createDate
+        case price, campaignPrice, shippingPrice, createDate
     }
 }
 
