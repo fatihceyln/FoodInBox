@@ -40,6 +40,7 @@ class ProductsVC: UIViewController {
             
             self.collectionView.reloadData()
             self.activityIndicator.stopAnimating()
+            self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .left, animated: true)
         }
     }
     

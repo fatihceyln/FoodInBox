@@ -35,6 +35,7 @@ class ProductCell: UICollectionViewCell {
         configureProductImageView()
         configureTitleLabel()
         configurePriceLabel()
+        configureCampaingPriceLabel()
     }
     
     override func prepareForReuse() {
@@ -44,7 +45,13 @@ class ProductCell: UICollectionViewCell {
         productImageView.image = nil
         
         titleLabel.text = nil
+        
+        priceLabel.strikeThrough(false)
         priceLabel.text = nil
+        priceLabel.font = .boldSystemFont(ofSize: 20)
+        priceLabel.textAlignment = .center
+        
+        campaingPriceLabel.text = nil
     }
     
     func set(_ product: ProductData) {
@@ -54,15 +61,12 @@ class ProductCell: UICollectionViewCell {
         productImageView.downloadImage(urlString: product.images?.first?.n ?? "", renderingMode: .alwaysOriginal)
         
         if let campaingPrice = product.campaignPrice {
-            let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: formatter.string(from: NSNumber(value: product.price ?? 0))!)
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
             
-            priceLabel.attributedText = attributeString
-            priceLabel.text?.append(" ₺")
+            priceLabel.strikeThrough(true)
             priceLabel.font = .systemFont(ofSize: 16)
             priceLabel.textAlignment = .left
             
-            configureCampaingPriceLabel()
+            campaingPriceLabel.alpha = 1
             campaingPriceLabel.text = formatter.string(from: NSNumber(value: campaingPrice))
             campaingPriceLabel.text?.append(" ₺")
         }
@@ -123,6 +127,7 @@ class ProductCell: UICollectionViewCell {
         campaingPriceLabel.font = .boldSystemFont(ofSize: 24)
         campaingPriceLabel.textAlignment = .right
         campaingPriceLabel.textColor = .systemGreen
+        campaingPriceLabel.alpha = 0
         
         NSLayoutConstraint.activate([
             campaingPriceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),

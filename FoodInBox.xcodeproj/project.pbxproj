@@ -30,6 +30,7 @@
 		3D6E7BBE28D8A8B6005B250A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E7BBD28D8A8B6005B250A /* HomeViewModel.swift */; };
 		3D6E7BC128D8AE2A005B250A /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6E7BC028D8AE2A005B250A /* CategoryCell.swift */; };
 		3DD89D0628D9F22A00BCFC7A /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0528D9F22A00BCFC7A /* ProductCell.swift */; };
+		3DD89D0928DA29EF00BCFC7A /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD89D0828DA29EF00BCFC7A /* UILabel+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		3D6E7BBD28D8A8B6005B250A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		3D6E7BC028D8AE2A005B250A /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		3DD89D0528D9F22A00BCFC7A /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
+		3DD89D0828DA29EF00BCFC7A /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				3D04550F28D8E66E001B601C /* UIView+Ext.swift */,
+				3DD89D0828DA29EF00BCFC7A /* UILabel+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				3D04551C28D8F745001B601C /* ProductsVC.swift in Sources */,
 				3D6E7B9428D89851005B250A /* SceneDelegate.swift in Sources */,
 				3D04550D28D8E59F001B601C /* CategoriesView.swift in Sources */,
+				3DD89D0928DA29EF00BCFC7A /* UILabel+Ext.swift in Sources */,
 				3DD89D0628D9F22A00BCFC7A /* ProductCell.swift in Sources */,
 				3D04551428D8E7D1001B601C /* UIHelper.swift in Sources */,
 				3D6E7BBA28D8A774005B250A /* HomeScreen.swift in Sources */,
