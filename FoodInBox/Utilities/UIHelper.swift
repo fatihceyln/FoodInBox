@@ -17,4 +17,14 @@ enum UIHelper {
         
         return layout
     }
+    
+    static func createProductFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let itemWidth = UIScreen.main.bounds.width / 3
+        
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.3)
+        
+        return layout
+    }
 }

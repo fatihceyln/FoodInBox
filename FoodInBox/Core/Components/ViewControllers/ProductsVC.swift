@@ -13,6 +13,8 @@ class ProductsVC: UIViewController {
     
     private var collectionView: UICollectionView!
     
+    private var activityIndicator: UIActivityIndicatorView!
+    
     init(service: ProductService) {
         viewModel = ProductsViewModel(service: service)
         super.init(nibName: nil, bundle: nil)
@@ -26,6 +28,8 @@ class ProductsVC: UIViewController {
         super.viewDidLoad()
 
         configureCollectionView()
+        configureActivityIndicator()
+        activityIndicator.startAnimating()
         
         addBinder()
         viewModel.getProducts()
@@ -36,11 +40,12 @@ class ProductsVC: UIViewController {
             guard let self = self else { return }
             
             self.collectionView.reloadData()
+            self.activityIndicator.stopAnimating()
         }
     }
     
     private func configureCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createCategoryFlowLayout())
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createProductFlowLayout())
         view.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,9 +57,22 @@ class ProductsVC: UIViewController {
         
         collectionView.pinToEdges(of: view)
     }
+    
+    private func configureActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(frame: view.bounds)
+        view.addSubview(activityIndicator)
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
 }
 
-extension ProductsVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ProductsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.products.value.count
     }

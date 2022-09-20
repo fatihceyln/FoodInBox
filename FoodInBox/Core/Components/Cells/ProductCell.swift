@@ -12,11 +12,25 @@ class ProductCell: UICollectionViewCell {
     static let reuseID = "ProductCell"
     
     private var productImageView: FCImageView!
+    private var titleLabel: UILabel!
+    private var priceLabel: UILabel!
+    
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        
+        return formatter
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        layer.cornerRadius = 10
+        backgroundColor = .systemGray6
+        
         configureProductImageView()
+        configureTitleLabel()
+        configurePriceLabel()
     }
     
     override func prepareForReuse() {
@@ -24,9 +38,14 @@ class ProductCell: UICollectionViewCell {
         
         productImageView.cancelDownloading()
         productImageView.image = nil
+        
+        titleLabel.text = nil
+        priceLabel.text = nil
     }
     
     func set(_ product: ProductData) {
+        titleLabel.text = product.title
+        priceLabel.text = formatter.string(from: NSNumber(value: product.price ?? 0))
         productImageView.downloadImage(urlString: product.images?.first?.n ?? "", renderingMode: .alwaysOriginal)
     }
     
@@ -43,6 +62,37 @@ class ProductCell: UICollectionViewCell {
             productImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             productImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             productImageView.heightAnchor.constraint(equalTo: productImageView.widthAnchor)
+        ])
+    }
+    
+    private func configureTitleLabel() {
+        titleLabel = UILabel(frame: .zero)
+        addSubview(titleLabel)
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.textAlignment = .center
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 5),
+            titleLabel.leadingAnchor.constraint(equalTo: productImageView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: productImageView.trailingAnchor)
+        ])
+    }
+    
+    private func configurePriceLabel() {
+        priceLabel = UILabel(frame: .zero)
+        addSubview(priceLabel)
+        
+        priceLabel.translatesAutoresizingMaskIntoConstraints = false
+        priceLabel.font = .boldSystemFont(ofSize: 20)
+        priceLabel.textAlignment = .center
+        priceLabel.textColor = .orange
+        
+        NSLayoutConstraint.activate([
+            priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
+            priceLabel.leadingAnchor.constraint(equalTo: productImageView.leadingAnchor),
+            priceLabel.trailingAnchor.constraint(equalTo: productImageView.trailingAnchor)
         ])
     }
 }

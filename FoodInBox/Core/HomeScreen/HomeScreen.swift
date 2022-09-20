@@ -38,8 +38,7 @@ class HomeScreen: UIViewController {
         addBinders()
         viewModel.getCategories()
         
-        productsView = UIView(frame: .zero)
-        stackView.addArrangedSubview(productsView)
+        configureProductsView()
     }
     
     private func add(childVC: UIViewController, to containerView: UIView) {
@@ -65,6 +64,14 @@ class HomeScreen: UIViewController {
         }
     }
     
+    private func configureProductsView() {
+        productsView = UIView(frame: .zero)
+        productsView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.9).isActive = true
+        
+        stackView.setCustomSpacing(80, after: categoriesView)
+        stackView.addArrangedSubview(productsView)
+    }
+    
     private func configureScrollView() {
         scrollView = UIScrollView(frame: .zero)
         view.addSubview(scrollView)
@@ -85,9 +92,10 @@ class HomeScreen: UIViewController {
         stackView.layoutMargins = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
         
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
         stackView.spacing = 10
         
+        stackView.pinToEdges(of: scrollView)
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
     
@@ -118,7 +126,6 @@ extension HomeScreen: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if viewModel.selectedCategory.value != viewModel.categories.value[indexPath.row] {
-            print(indexPath)
             let cellWillBeActive = collectionView.cellForItem(at: indexPath) as! CategoryCell
             cellWillBeActive.backgroundColor = .orange
             

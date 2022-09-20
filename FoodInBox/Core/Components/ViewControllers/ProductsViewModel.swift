@@ -22,7 +22,13 @@ class ProductsViewModel {
             guard let self = self else { return }
             
             DispatchQueue.main.async {
-                self.products.value = returnedProducts
+                var tempProducts: [ProductData] = []
+                for product in returnedProducts {
+                    if !tempProducts.contains(where: {$0.title == product.title}) {
+                        tempProducts.append(product)
+                    }
+                }
+                self.products.value = tempProducts
             }
         }
     }
