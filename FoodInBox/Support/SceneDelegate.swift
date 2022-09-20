@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let service = CategoryService(urlString: APIUrls.categories)
         
-        window?.rootViewController = HomeScreen(service: service)
+        window?.rootViewController = UINavigationController(rootViewController: HomeScreen(service: service))
         window?.makeKeyAndVisible()
     }
 

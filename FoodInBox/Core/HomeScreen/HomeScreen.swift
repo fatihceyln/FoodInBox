@@ -18,6 +18,8 @@ class HomeScreen: FCDataLoadingVC {
     private var productsView: UIView!
     private var productsVC: ProductsVC!
     
+    private var appTitleLabel: UILabel!
+    
     init(service: CategoryService) {
         viewModel = HomeViewModel(service: service)
         
@@ -31,8 +33,12 @@ class HomeScreen: FCDataLoadingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
         configureScrollView()
         configureStackView()
+        
+        configureAppTitle()
         configureCategoriesView()
         configureProductsView()
         
@@ -88,7 +94,7 @@ extension HomeScreen {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 30, left: 10, bottom: 30, right: 10)
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         
         stackView.axis = .vertical
         stackView.distribution = .fill
@@ -96,6 +102,18 @@ extension HomeScreen {
         
         stackView.pinToEdges(of: scrollView)
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+    }
+    
+    private func configureAppTitle() {
+        appTitleLabel = UILabel(frame: .zero)
+        stackView.addArrangedSubview(appTitleLabel)
+        stackView.setCustomSpacing(50, after: appTitleLabel)
+        
+        appTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        appTitleLabel.text = "Food In Box"
+        appTitleLabel.font = .boldSystemFont(ofSize: 40)
+        appTitleLabel.textAlignment = .center
     }
     
     private func configureCategoriesView() {
@@ -111,7 +129,7 @@ extension HomeScreen {
         productsView = UIView(frame: .zero)
         productsView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 1).isActive = true
         
-        stackView.setCustomSpacing(80, after: categoriesView)
+        stackView.setCustomSpacing(40, after: categoriesView)
         stackView.addArrangedSubview(productsView)
         
         productsVC = ProductsVC(service: ProductService(), delegate: self)
@@ -157,5 +175,10 @@ extension HomeScreen: ProductsVCDelegate {
         if status == .finished {
             dismissLoadingView()
         }
+    }
+    
+    func productSelected(_ product: ProductData) {
+        let productDetailVC = ProductDetailVC(product: product)
+        navigationController?.pushViewController(productDetailVC, animated: true)
     }
 }

@@ -13,6 +13,7 @@ enum LoadingStatus {
 
 protocol ProductsVCDelegate: AnyObject {
     func loadingStatusChanged(_ status: LoadingStatus)
+    func productSelected(_ product: ProductData)
 }
 
 class ProductsVC: UIViewController {
@@ -76,5 +77,10 @@ extension ProductsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
         cell.set(viewModel.products.value[indexPath.row])
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let product = viewModel.products.value[indexPath.row]
+        delegate.productSelected(product)
     }
 }

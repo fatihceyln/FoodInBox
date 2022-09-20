@@ -11,7 +11,7 @@ struct Product: Codable {
     let data: [ProductData]?
 }
 
-struct ProductData: Codable {
+struct ProductData: Codable {    
     let id: String?
     let title: String?
     let images: [Icon]?
@@ -25,6 +25,10 @@ struct ProductData: Codable {
         case title, images
         case description
         case price, campaignPrice, shippingPrice, createDate
+    }
+    
+    var loremDescription: String {
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla lectus velit, sodales nec pretium elementum, porttitor id orci."
     }
 }
 
