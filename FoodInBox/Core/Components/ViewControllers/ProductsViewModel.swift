@@ -21,7 +21,9 @@ class ProductsViewModel {
         service.downloadProducts { [weak self] returnedProducts in
             guard let self = self else { return }
             
-            self.products.value = returnedProducts
+            DispatchQueue.main.async {
+                self.products.value = returnedProducts
+            }
         }
     }
 }

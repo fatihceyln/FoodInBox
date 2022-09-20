@@ -40,9 +40,6 @@ class HomeScreen: UIViewController {
         
         productsView = UIView(frame: .zero)
         stackView.addArrangedSubview(productsView)
-        
-        productsView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        
     }
     
     private func add(childVC: UIViewController, to containerView: UIView) {
@@ -56,14 +53,15 @@ class HomeScreen: UIViewController {
         viewModel.categories.bind { [weak self] _ in
             guard let _ = self else { return }
             
-            // Update UI
             self?.categoriesView.collectionView.reloadData()
         }
         
         viewModel.selectedCategory.bind { [weak self] selectedCategory in
             guard let self = self else { return }
             
-            self.add(childVC: ProductsVC(service: ProductService(urlString: APIUrls.products(categoryId: self.viewModel.selectedCategory.value?.categoryID ?? ""))), to: self.productsView)
+            guard let categoryId = selectedCategory?.categoryID else { return }
+            let productService = ProductService(urlString: APIUrls.products(categoryId: categoryId))
+            self.add(childVC: ProductsVC(service: productService), to: self.productsView)
         }
     }
     

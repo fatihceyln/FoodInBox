@@ -11,6 +11,8 @@ class ProductsVC: UIViewController {
     
     let viewModel: ProductsViewModel
     
+    private var collectionView: UICollectionView!
+    
     init(service: ProductService) {
         viewModel = ProductsViewModel(service: service)
         super.init(nibName: nil, bundle: nil)
@@ -23,22 +25,44 @@ class ProductsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .red
+        configureCollectionView()
+        
         addBinder()
         viewModel.getProducts()
-        
-        view.gestureRecognizers = [UITapGestureRecognizer(target: self, action: #selector(action))]
-    }
-    
-    @objc func action() {
-        print("a")
     }
     
     private func addBinder() {
         viewModel.products.bind { [weak self] returnedProducts in
-            guard let _ = self else { return }
+            guard let self = self else { return }
             
-            print(returnedProducts)
+            self.collectionView.reloadData()
         }
+    }
+    
+    private func configureCollectionView() {
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createCategoryFlowLayout())
+        view.addSubview(collectionView)
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseID)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
+        
+        collectionView.pinToEdges(of: view)
+    }
+}
+
+extension ProductsVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        viewModel.products.value.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseID, for: indexPath) as! ProductCell
+        cell.set(viewModel.products.value[indexPath.row])
+        
+        return cell
     }
 }

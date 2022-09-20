@@ -30,7 +30,7 @@ class FCImageView: UIImageView {
         tintColor = .white
     }
     
-    func downloadImage(urlString: String) {
+    func downloadImage(urlString: String, renderingMode: UIImage.RenderingMode) {
         guard let url = URL(string: urlString) else { return }
         image = nil
         
@@ -49,7 +49,7 @@ class FCImageView: UIImageView {
             CacheManager.shared.cache.setObject(image, forKey: urlString as NSString)
             
             DispatchQueue.main.async {
-                self.image = image.withRenderingMode(.alwaysTemplate)
+                self.image = image.withRenderingMode(renderingMode)
             }
         })
         

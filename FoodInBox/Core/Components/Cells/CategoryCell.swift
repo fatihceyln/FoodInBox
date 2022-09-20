@@ -37,14 +37,13 @@ class CategoryCell: UICollectionViewCell {
         categoryImageView.image = nil
         
         categoryImageView.cancelDownloading()
-        categoryImageView.dataTask = nil
     }
     
     func set(_ categoryData: CategoryData) {
         titleLabel.text = categoryData.name ?? ""
         
         if let urlString = categoryData.icon {
-            categoryImageView.downloadImage(urlString: urlString)
+            categoryImageView.downloadImage(urlString: urlString, renderingMode: .alwaysTemplate)
         }
     }
     

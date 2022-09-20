@@ -16,7 +16,7 @@ struct ProductData: Codable {
     let title: String?
     let images: [Icon]?
     let description: String?
-    let price: Int?
+    let price: Double?
     let campaignPrice, shippingPrice: Double?
     let createDate: String?
 
