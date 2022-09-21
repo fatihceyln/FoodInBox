@@ -98,7 +98,7 @@ class ProductCell: UICollectionViewCell {
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         priceLabel.font = .boldSystemFont(ofSize: 20)
         priceLabel.textAlignment = .center
-        priceLabel.textColor = .orange
+        priceLabel.textColor = .systemOrange
         
         NSLayoutConstraint.activate([
             priceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),

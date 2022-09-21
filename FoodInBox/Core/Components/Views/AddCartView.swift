@@ -46,7 +46,7 @@ class AddCartView: UIView {
         priceLabel.translatesAutoresizingMaskIntoConstraints = false
         
         priceLabel.font = .boldSystemFont(ofSize: 32)
-        priceLabel.textColor = .orange
+        priceLabel.textColor = .systemOrange
         
         if let campaingPrice = product.campaignPrice {
             priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: campaingPrice))?.asTRYCurrency()
@@ -70,7 +70,7 @@ class AddCartView: UIView {
         addToCartButton.layer.cornerRadius = 10
         addToCartButton.setTitle("Add to Cart", for: .normal)
         addToCartButton.titleLabel?.font = .boldSystemFont(ofSize: 26)
-        addToCartButton.backgroundColor = .orange
+        addToCartButton.backgroundColor = .systemOrange
         
         addToCartButton.addTarget(self, action: #selector(addCartButtonAction), for: .touchUpInside)
         

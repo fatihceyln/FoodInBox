@@ -35,7 +35,7 @@ class HomeScreen: FCDataLoadingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: true)
         
         configureScrollView()
         configureStackView()
@@ -156,7 +156,7 @@ extension HomeScreen {
             self.priceMenuButton.setImage(UIImage(systemName: SortOption.descending.systemName), for: .normal)
         }
         
-        priceMenuButton.menu = UIMenu(title: "Price order", children: [ascendingAction, descendingAction])
+        priceMenuButton.menu = UIMenu(title: "Price Order", children: [descendingAction, ascendingAction])
     }
     
     private func configureProductsView() {
@@ -180,7 +180,7 @@ extension HomeScreen: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseID, for: indexPath) as! CategoryCell
         cell.set(viewModel.categories.value[indexPath.row])
         if viewModel.selectedCategory.value == viewModel.categories.value[indexPath.row] {
-            cell.backgroundColor = .orange
+            cell.backgroundColor = .systemOrange
         }
         
         return cell
@@ -189,7 +189,7 @@ extension HomeScreen: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if viewModel.selectedCategory.value != viewModel.categories.value[indexPath.row] {
             let cellWillBeActive = collectionView.cellForItem(at: indexPath) as! CategoryCell
-            cellWillBeActive.backgroundColor = .orange
+            cellWillBeActive.backgroundColor = .systemOrange
             
             guard let previousCategory = viewModel.selectedCategory.value else { return }
             guard let previousCategoryIndex = viewModel.categories.value.firstIndex(of: previousCategory) else { return }
