@@ -20,6 +20,8 @@ class HomeScreen: FCDataLoadingVC {
     
     private var appTitleLabel: UILabel!
     
+    private var priceMenuButton: UIButton!
+    
     init(service: CategoryService) {
         viewModel = HomeViewModel(service: service)
         
@@ -40,6 +42,7 @@ class HomeScreen: FCDataLoadingVC {
         
         configureAppTitle()
         configureCategoriesView()
+        configurePriceMenu()
         configureProductsView()
         
         addBinders()
@@ -94,7 +97,7 @@ extension HomeScreen {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 30, right: 10)
         
         stackView.axis = .vertical
         stackView.distribution = .fill
@@ -123,6 +126,37 @@ extension HomeScreen {
         categoriesView.collectionView.delegate = self
         categoriesView.collectionView.dataSource = self
         categoriesView.setTitle("Categories")
+    }
+    
+    private func configurePriceMenu() {
+        priceMenuButton = UIButton()
+        stackView.addArrangedSubview(priceMenuButton)
+        
+        priceMenuButton.setTitle(SortOption.ascending.rawValue.capitalized, for: .normal)
+        priceMenuButton.setImage(UIImage(systemName: SortOption.ascending.systemName), for: .normal)
+        priceMenuButton.tintColor = .secondaryLabel
+        priceMenuButton.setTitleColor(.secondaryLabel, for: .normal)
+        priceMenuButton.contentHorizontalAlignment = .left
+        priceMenuButton.alpha = 0
+        
+        priceMenuButton.translatesAutoresizingMaskIntoConstraints = false
+        priceMenuButton.showsMenuAsPrimaryAction = true
+        
+        let ascendingAction = UIAction(title: "Ascending", image: UIImage(systemName: "arrow.up")) { action in
+            self.productsVC.viewModel.sortProducts(sortOption: .ascending)
+            
+            self.priceMenuButton.setTitle(SortOption.ascending.rawValue.capitalized, for: .normal)
+            self.priceMenuButton.setImage(UIImage(systemName: SortOption.ascending.systemName), for: .normal)
+        }
+        
+        let descendingAction = UIAction(title: "Descending", image: UIImage(systemName: "arrow.down")) { action in
+            self.productsVC.viewModel.sortProducts(sortOption: .descending)
+            
+            self.priceMenuButton.setTitle(SortOption.descending.rawValue.capitalized, for: .normal)
+            self.priceMenuButton.setImage(UIImage(systemName: SortOption.descending.systemName), for: .normal)
+        }
+        
+        priceMenuButton.menu = UIMenu(title: "Price order", children: [ascendingAction, descendingAction])
     }
     
     private func configureProductsView() {
@@ -174,6 +208,10 @@ extension HomeScreen: ProductsVCDelegate {
     func loadingStatusChanged(_ status: LoadingStatus) {
         if status == .finished {
             dismissLoadingView()
+            
+            self.priceMenuButton.alpha = 1
+            self.priceMenuButton.setTitle(SortOption.ascending.rawValue.capitalized, for: .normal)
+            self.priceMenuButton.setImage(UIImage(systemName: SortOption.ascending.systemName), for: .normal)
         }
     }
     

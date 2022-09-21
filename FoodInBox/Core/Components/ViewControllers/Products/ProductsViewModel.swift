@@ -7,9 +7,24 @@
 
 import Foundation
 
+enum SortOption: String {
+    case ascending, descending
+    
+    var systemName: String {
+        switch self {
+        case .ascending:
+            return "arrow.up"
+        case .descending:
+            return "arrow.down"
+        }
+    }
+}
+
+
 class ProductsViewModel {
     
     var products: Observable<[ProductData]> = Observable([])
+    var sortOption: Observable<SortOption> = Observable(.ascending)
     
     private let service: ProductService
     
@@ -28,6 +43,7 @@ class ProductsViewModel {
                         tempProducts.append(product)
                     }
                 }
+                
                 tempProducts.sort { p1, p2 in
                     if p1.campaignPrice != nil && p2.campaignPrice == nil {
                         return (p1.campaignPrice ?? 0) < (p2.price ?? 0)
@@ -41,6 +57,43 @@ class ProductsViewModel {
                 }
                 self.products.value = tempProducts
             }
+        }
+    }
+    
+    func sortProducts(sortOption: SortOption) {
+        var tempProducts = products.value
+        
+        switch sortOption {
+        case .ascending:
+            
+            tempProducts.sort { p1, p2 in
+                if p1.campaignPrice != nil && p2.campaignPrice == nil {
+                    return (p1.campaignPrice ?? 0) < (p2.price ?? 0)
+                } else if p1.campaignPrice == nil && p2.campaignPrice != nil {
+                    return (p1.price ?? 0) < (p2.campaignPrice ?? 0)
+                } else if p1.campaignPrice != nil && p2.campaignPrice != nil {
+                    return (p1.campaignPrice ?? 0) < (p2.campaignPrice ?? 0)
+                }
+                
+                return (p1.price ?? 0) < (p2.price ?? 0)
+            }
+            self.products.value = tempProducts
+            
+        case .descending:
+            
+            tempProducts.sort { p1, p2 in
+                if p1.campaignPrice != nil && p2.campaignPrice == nil {
+                    return (p1.campaignPrice ?? 0) > (p2.price ?? 0)
+                } else if p1.campaignPrice == nil && p2.campaignPrice != nil {
+                    return (p1.price ?? 0) > (p2.campaignPrice ?? 0)
+                } else if p1.campaignPrice != nil && p2.campaignPrice != nil {
+                    return (p1.campaignPrice ?? 0) > (p2.campaignPrice ?? 0)
+                }
+                
+                return (p1.price ?? 0) > (p2.price ?? 0)
+            }
+            self.products.value = tempProducts
+            
         }
     }
 }
