@@ -7,14 +7,20 @@
 
 import UIKit
 
+protocol AddCartViewDelegate: AnyObject {
+    func addCartButtonAction()
+}
+
 class AddCartView: UIView {
     
     private var priceLabel: UILabel!
     private var addToCartButton: UIButton!
     
     private let product: ProductData!
+    
+    private weak var delegate: AddCartViewDelegate!
 
-    init(product: ProductData) {
+    init(product: ProductData, delegate: AddCartViewDelegate) {
         self.product = product
         super.init(frame: .zero)
         
@@ -22,6 +28,8 @@ class AddCartView: UIView {
         layer.cornerRadius = 10
         backgroundColor = .systemGray6.withAlphaComponent(0.6)
         heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        self.delegate = delegate
         
         configurePriceLabel()
         configureAddToCartButton()
@@ -64,11 +72,17 @@ class AddCartView: UIView {
         addToCartButton.titleLabel?.font = .boldSystemFont(ofSize: 26)
         addToCartButton.backgroundColor = .orange
         
+        addToCartButton.addTarget(self, action: #selector(addCartButtonAction), for: .touchUpInside)
+        
         NSLayoutConstraint.activate([
             addToCartButton.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             addToCartButton.leadingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: 20),
             addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
+    }
+    
+    @objc private func addCartButtonAction() {
+        delegate.addCartButtonAction()
     }
 }

@@ -156,8 +156,18 @@ extension ProductDetailVC {
 
 extension ProductDetailVC {
     private func configureCartContainerView() {
-        addCartView = AddCartView(product: product)
+        addCartView = AddCartView(product: product, delegate: self)
         stackView.addArrangedSubview(addCartView)
         stackView.setCustomSpacing(40, after: descriptionLabel)
+    }
+}
+
+extension ProductDetailVC: AddCartViewDelegate {
+    func addCartButtonAction() {
+        
+        ProductStore.update(product: product)
+        
+        
+        navigationController?.popViewController(animated: true)
     }
 }

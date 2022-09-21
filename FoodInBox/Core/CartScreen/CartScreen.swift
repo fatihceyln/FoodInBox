@@ -17,7 +17,7 @@ class CartScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        configureEmptyStateView()
+        configureEmptyStateView()
         configureTableView()
         
         addBinders()
@@ -31,8 +31,16 @@ class CartScreen: UIViewController {
     
     private func addBinders() {
         viewModel.products.bind { [weak self] products in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
+            guard let self = self else { return }
+            
+            if products.isEmpty {
+                guard let emptyStateView = self.emptyStateView else { return }
+                self.view.bringSubviewToFront(emptyStateView)
+            } else {
+                guard let tableView = self.tableView else { return }
+                self.view.bringSubviewToFront(tableView)
+                
+                self.tableView.reloadData()
             }
         }
     }

@@ -13,9 +13,13 @@ class CartViewModel {
     
     func getProducts() {
         ProductStore.retrieveProducts { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let products):
-                self?.products.value = products
+                DispatchQueue.main.async {
+                    self.products.value = products
+                }
             case .failure(let error):
                 print(error)
             }
