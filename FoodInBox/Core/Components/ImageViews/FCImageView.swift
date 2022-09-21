@@ -9,7 +9,7 @@ import UIKit
 
 class FCImageView: UIImageView {
     
-    var dataTask: URLSessionDataTask?
+    private var dataTask: URLSessionDataTask?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

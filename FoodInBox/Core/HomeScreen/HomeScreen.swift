@@ -43,7 +43,7 @@ class HomeScreen: FCDataLoadingVC {
         configureProductsView()
         
         addBinders()
-        getNecessaryDataForView()
+        getNecessaryDataForVC()
     }
     
     private func addBinders() {
@@ -71,7 +71,7 @@ class HomeScreen: FCDataLoadingVC {
 }
 
 extension HomeScreen {
-    private func getNecessaryDataForView() {
+    private func getNecessaryDataForVC() {
         viewModel.getCategories()
     }
 }

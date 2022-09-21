@@ -13,8 +13,8 @@ class CacheManager {
     
     let cache: NSCache<NSString, UIImage> = {
         let cache = NSCache<NSString, UIImage>()
-        cache.countLimit = 100
-        cache.totalCostLimit = 1024 * 1024 * 100
+        cache.countLimit = 60
+        cache.totalCostLimit = 1024 * 1024 * 40
         return cache
     }()
 }
