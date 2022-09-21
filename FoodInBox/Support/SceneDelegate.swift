@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let service = CategoryService(urlString: APIUrls.categories)
         
-        window?.rootViewController = UINavigationController(rootViewController: CartScreen())
+        window?.rootViewController = FCTabBarController(service: service)
         window?.makeKeyAndVisible()
     }
 
