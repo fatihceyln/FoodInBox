@@ -34,8 +34,8 @@ class CategoryCell: UICollectionViewCell {
         backgroundColor = .systemGray6
         
         titleLabel.text = nil
-        categoryImageView.image = nil
         
+        categoryImageView.image = nil
         categoryImageView.cancelDownloading()
     }
     

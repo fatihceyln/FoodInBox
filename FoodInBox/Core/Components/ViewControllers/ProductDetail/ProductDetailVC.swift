@@ -9,16 +9,6 @@ import UIKit
 
 class ProductDetailVC: UIViewController {
     
-    private var formatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = ""
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
-        
-        return formatter
-    }
-    
     private var scrollView: UIScrollView!
     private var stackView: UIStackView!
     
@@ -176,9 +166,9 @@ extension ProductDetailVC {
         priceLabel.textColor = .orange
         
         if let campaingPrice = product.campaignPrice {
-            priceLabel.text = formatter.string(from: NSNumber(value: campaingPrice))?.asTRYCurrency()
+            priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: campaingPrice))?.asTRYCurrency()
         } else {
-            priceLabel.text = formatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
+            priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
         }
         
         NSLayoutConstraint.activate([

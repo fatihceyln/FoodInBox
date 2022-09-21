@@ -16,16 +16,6 @@ class ProductCell: UICollectionViewCell {
     private var priceLabel: UILabel!
     private var campaingPriceLabel: UILabel!
     
-    private var formatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = ""
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
-        
-        return formatter
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -56,7 +46,7 @@ class ProductCell: UICollectionViewCell {
     
     func set(_ product: ProductData) {
         titleLabel.text = product.title
-        priceLabel.text = formatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
+        priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
         productImageView.downloadImage(urlString: product.images?.first?.n ?? "", renderingMode: .alwaysOriginal)
         
         if let campaingPrice = product.campaignPrice {
@@ -66,7 +56,7 @@ class ProductCell: UICollectionViewCell {
             priceLabel.textAlignment = .left
             
             campaingPriceLabel.alpha = 1
-            campaingPriceLabel.text = formatter.string(from: NSNumber(value: campaingPrice))?.asTRYCurrency()
+            campaingPriceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: campaingPrice))?.asTRYCurrency()
         }
     }
     
