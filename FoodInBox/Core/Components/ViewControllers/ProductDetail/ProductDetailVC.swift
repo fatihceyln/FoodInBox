@@ -21,9 +21,7 @@ class ProductDetailVC: UIViewController {
     private var caloriesAttribute: AttributeView!
     private var cookingAttribute: AttributeView!
     
-    private var cartContainerView: UIView!
-    private var priceLabel: UILabel!
-    private var addToCartButton: UIButton!
+    private var addCartView: AddCartView!
     
     private let product: ProductData!
     
@@ -39,10 +37,7 @@ class ProductDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        view.backgroundColor = .systemBackground
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = .orange
+        configureVC()
         
         configureScrollView()
         configureStackView()
@@ -56,8 +51,14 @@ class ProductDetailVC: UIViewController {
         configureDescriptionLabel()
         
         configureCartContainerView()
-        configurePriceLabel()
-        configureAddToCartButton()
+    }
+}
+
+extension ProductDetailVC {
+    private func configureVC() {
+        view.backgroundColor = .systemBackground
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.tintColor = .orange
     }
 }
 
@@ -88,7 +89,9 @@ extension ProductDetailVC {
         stackView.pinToEdges(of: scrollView)
         stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
-    
+}
+
+extension ProductDetailVC {
     private func configureProductImageView() {
         productImageView = FCImageView(frame: .zero)
         stackView.addArrangedSubview(productImageView)
@@ -107,7 +110,9 @@ extension ProductDetailVC {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .boldSystemFont(ofSize: 26)
     }
-    
+}
+
+extension ProductDetailVC {
     private func configureAttributeStackView() {
         attributeStackView = UIStackView(frame: .zero)
         stackView.addArrangedSubview(attributeStackView)
@@ -133,6 +138,9 @@ extension ProductDetailVC {
         attributeStackView.addArrangedSubview(cookingAttribute)
     }
     
+}
+
+extension ProductDetailVC {
     private func configureDescriptionLabel() {
         descriptionLabel = UILabel(frame: .zero)
         stackView.addArrangedSubview(descriptionLabel)
@@ -144,57 +152,12 @@ extension ProductDetailVC {
         descriptionLabel.font = .systemFont(ofSize: 18)
         descriptionLabel.numberOfLines = 0
     }
-    
+}
+
+extension ProductDetailVC {
     private func configureCartContainerView() {
-        cartContainerView = UIView(frame: .zero)
-        stackView.addArrangedSubview(cartContainerView)
+        addCartView = AddCartView(product: product)
+        stackView.addArrangedSubview(addCartView)
         stackView.setCustomSpacing(40, after: descriptionLabel)
-        
-        cartContainerView.layer.cornerRadius = 10
-        cartContainerView.backgroundColor = .systemGray6.withAlphaComponent(0.6)
-        
-        cartContainerView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-    }
-    
-    private func configurePriceLabel() {
-        priceLabel = UILabel(frame: .zero)
-        cartContainerView.addSubview(priceLabel)
-        
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        priceLabel.font = .boldSystemFont(ofSize: 32)
-        priceLabel.textColor = .orange
-        
-        if let campaingPrice = product.campaignPrice {
-            priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: campaingPrice))?.asTRYCurrency()
-        } else {
-            priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
-        }
-        
-        NSLayoutConstraint.activate([
-            priceLabel.leadingAnchor.constraint(equalTo: cartContainerView.leadingAnchor, constant: 20),
-            priceLabel.widthAnchor.constraint(equalToConstant: 100),
-            priceLabel.centerYAnchor.constraint(equalTo: cartContainerView.centerYAnchor)
-        ])
-    }
-    
-    private func configureAddToCartButton() {
-        addToCartButton = UIButton(frame: .zero)
-        cartContainerView.addSubview(addToCartButton)
-        
-        addToCartButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        addToCartButton.layer.cornerRadius = 10
-        addToCartButton.setTitle("Add to Cart", for: .normal)
-        addToCartButton.titleLabel?.font = .boldSystemFont(ofSize: 26)
-        addToCartButton.tintColor = .orange
-        addToCartButton.backgroundColor = .orange
-        
-        NSLayoutConstraint.activate([
-            addToCartButton.topAnchor.constraint(equalTo: cartContainerView.topAnchor, constant: 20),
-            addToCartButton.leadingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: 20),
-            addToCartButton.trailingAnchor.constraint(equalTo: cartContainerView.trailingAnchor, constant: -20),
-            addToCartButton.bottomAnchor.constraint(equalTo: cartContainerView.bottomAnchor, constant: -20)
-        ])
     }
 }
