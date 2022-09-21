@@ -1,5 +1,9 @@
 # FoodInBox
 
 MVVM Binding
-Depedency Injection
+
+DI
+
 No 3rd party libraries
+
+%100 Programmatic
