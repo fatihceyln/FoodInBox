@@ -39,6 +39,10 @@ class AddCartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func changeButtonTitle() {
+        addToCartButton.setTitle("Remove from Cart", for: .normal)
+    }
+    
     private func configurePriceLabel() {
         priceLabel = UILabel(frame: .zero)
         addSubview(priceLabel)

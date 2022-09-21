@@ -51,6 +51,25 @@ class ProductDetailVC: UIViewController {
         configureDescriptionLabel()
         
         configureCartContainerView()
+        
+        checkIfIsInTheCart()
+    }
+}
+
+extension ProductDetailVC {
+    private func checkIfIsInTheCart() {
+        ProductStore.retrieveProducts { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let products):
+                if products.contains(where: {$0 == self.product}) {
+                    self.addCartView.changeButtonTitle()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 

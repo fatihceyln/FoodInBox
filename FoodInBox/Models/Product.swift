@@ -11,7 +11,7 @@ struct Product: Codable {
     let data: [ProductData]?
 }
 
-struct ProductData: Codable {    
+struct ProductData: Codable, Equatable {
     let id: String?
     let title: String?
     let images: [Icon]?
@@ -32,7 +32,7 @@ struct ProductData: Codable {
     }
 }
 
-struct Icon: Codable {
+struct Icon: Codable, Equatable {
     let use, dontUse: String?
     
     enum CodingKeys: String, CodingKey {
