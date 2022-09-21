@@ -17,8 +17,10 @@ class CartScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Foods in Cart"
+        navigationItem.backButtonTitle = "Back"
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.prefersLargeTitles = false
         
         configureEmptyStateView()
         configureTableView()
@@ -85,5 +87,12 @@ extension CartScreen: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let productDetailVC = ProductDetailVC(product: viewModel.products.value[indexPath.row])
+        navigationController?.pushViewController(productDetailVC, animated: true)
     }
 }

@@ -35,8 +35,6 @@ class HomeScreen: FCDataLoadingVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        
         configureScrollView()
         configureStackView()
         
@@ -47,6 +45,12 @@ class HomeScreen: FCDataLoadingVC {
         
         addBinders()
         getNecessaryDataForVC()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     private func addBinders() {

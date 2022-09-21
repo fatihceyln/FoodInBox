@@ -58,7 +58,7 @@ extension ProductDetailVC {
     private func configureVC() {
         view.backgroundColor = .systemBackground
         navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.tintColor = .systemOrange
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
 }
 
