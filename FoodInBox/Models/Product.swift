@@ -33,5 +33,10 @@ struct ProductData: Codable {
 }
 
 struct Icon: Codable {
-    let t, n: String?
+    let use, dontUse: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case use = "n"
+        case dontUse = "t"
+    }
 }

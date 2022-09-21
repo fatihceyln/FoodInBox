@@ -59,7 +59,7 @@ class FCTabBarController: UITabBarController {
         UINavigationBar.appearance().tintColor = .systemOrange
         
         let navigationBarAppearance = UINavigationBarAppearance()
-        navigationBarAppearance.configureWithTransparentBackground()
+        navigationBarAppearance.configureWithDefaultBackground()
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
     }

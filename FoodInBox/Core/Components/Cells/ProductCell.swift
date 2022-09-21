@@ -47,7 +47,7 @@ class ProductCell: UICollectionViewCell {
     func set(_ product: ProductData) {
         titleLabel.text = product.title
         priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
-        productImageView.downloadImage(urlString: product.images?.first?.n ?? "", renderingMode: .alwaysOriginal)
+        productImageView.downloadImage(urlString: product.images?.first?.use ?? "", renderingMode: .alwaysOriginal)
         
         if let campaingPrice = product.campaignPrice {
             

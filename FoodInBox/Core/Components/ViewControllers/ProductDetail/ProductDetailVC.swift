@@ -96,7 +96,7 @@ extension ProductDetailVC {
         productImageView = FCImageView(frame: .zero)
         stackView.addArrangedSubview(productImageView)
 
-        guard let urlString = product.images?.first?.n else { return }
+        guard let urlString = product.images?.first?.use else { return }
         productImageView.downloadImage(urlString: urlString, renderingMode: .alwaysOriginal)
 
         productImageView.heightAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.8).isActive = true

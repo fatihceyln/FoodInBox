@@ -17,6 +17,9 @@ class CartScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Foods in Cart"
+        
         configureEmptyStateView()
         configureTableView()
         
@@ -37,10 +40,10 @@ class CartScreen: UIViewController {
                 guard let emptyStateView = self.emptyStateView else { return }
                 self.view.bringSubviewToFront(emptyStateView)
             } else {
-                guard let tableView = self.tableView else { return }
-                self.view.bringSubviewToFront(tableView)
-                
                 self.tableView.reloadData()
+                
+                guard let tableView = self.tableView, self.view.subviews.last != tableView else { return }
+                self.view.bringSubviewToFront(tableView)
             }
         }
     }
@@ -62,6 +65,7 @@ extension CartScreen {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.reuseID)
         
         tableView.pinToEdges(of: view)
     }
@@ -73,9 +77,13 @@ extension CartScreen: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = viewModel.products.value[indexPath.row].title
+        let cell = tableView.dequeueReusableCell(withIdentifier: CartCell.reuseID) as! CartCell
+        cell.set(viewModel.products.value[indexPath.row])
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        100
     }
 }
