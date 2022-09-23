@@ -11,6 +11,7 @@ class CartScreen: UIViewController {
     
     private var emptyStateView: EmptyStateView!
     private var tableView: UITableView!
+    private var cartConfirmView: CartConfirmView!
     
     private var viewModel = CartViewModel()
     
@@ -23,6 +24,7 @@ class CartScreen: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = false
         
         configureEmptyStateView()
+        configureCartConfirmView()
         configureTableView()
         
         addBinders()
@@ -43,9 +45,11 @@ class CartScreen: UIViewController {
                 self.view.bringSubviewToFront(emptyStateView)
             } else {
                 self.tableView.reloadData()
+                self.cartConfirmView.setPrice(totalPrice: self.viewModel.totalPrice)
                 
                 guard let tableView = self.tableView, self.view.subviews.last != tableView else { return }
                 self.view.bringSubviewToFront(tableView)
+                self.view.bringSubviewToFront(self.cartConfirmView)
             }
         }
     }
@@ -69,7 +73,23 @@ extension CartScreen {
         tableView.dataSource = self
         tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.reuseID)
         
-        tableView.pinToEdges(of: view)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: cartConfirmView.topAnchor)
+        ])
+    }
+    
+    private func configureCartConfirmView() {
+        cartConfirmView = CartConfirmView(delegate: self)
+        view.addSubview(cartConfirmView)
+        
+        NSLayoutConstraint.activate([
+            cartConfirmView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            cartConfirmView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            cartConfirmView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+        ])
     }
 }
 
@@ -94,5 +114,11 @@ extension CartScreen: UITableViewDelegate, UITableViewDataSource {
         
         let productDetailVC = ProductDetailVC(product: viewModel.products.value[indexPath.row])
         navigationController?.pushViewController(productDetailVC, animated: true)
+    }
+}
+
+extension CartScreen: CartConfirmViewProtocol {
+    func confirmButtonPressed() {
+        viewModel.products.value.removeAll()
     }
 }
