@@ -120,5 +120,7 @@ extension CartScreen: UITableViewDelegate, UITableViewDataSource {
 extension CartScreen: CartConfirmViewProtocol {
     func confirmButtonPressed() {
         viewModel.products.value.removeAll()
+        
+        ProductStore.removeAll()
     }
 }

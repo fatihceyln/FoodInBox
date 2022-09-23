@@ -52,4 +52,17 @@ enum ProductStore {
             print(error)
         }
     }
+    
+    static func removeAll() {
+        retrieveProducts { result in
+            switch result {
+            case .success(var products):
+                products.removeAll()
+                
+                saveProducts(products: products)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
