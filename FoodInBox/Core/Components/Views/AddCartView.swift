@@ -13,6 +13,7 @@ protocol AddCartViewDelegate: AnyObject {
 
 class AddCartView: UIView {
     
+    private var beforeCampaingPriceLabel: UILabel!
     private var priceLabel: UILabel!
     private var addToCartButton: UIButton!
     
@@ -54,6 +55,9 @@ class AddCartView: UIView {
         
         if let campaingPrice = product.campaignPrice {
             priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: campaingPrice))?.asTRYCurrency()
+            priceLabel.textColor = .systemGreen
+            
+            configureBeforeCampaingPriceLabel()
         } else {
             priceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
         }
@@ -83,6 +87,24 @@ class AddCartView: UIView {
             addToCartButton.leadingAnchor.constraint(equalTo: priceLabel.trailingAnchor, constant: 20),
             addToCartButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             addToCartButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+        ])
+    }
+    
+    private func configureBeforeCampaingPriceLabel() {
+        beforeCampaingPriceLabel = UILabel(frame: .zero)
+        addSubview(beforeCampaingPriceLabel)
+        
+        beforeCampaingPriceLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        beforeCampaingPriceLabel.textColor = .systemOrange
+        beforeCampaingPriceLabel.font = .systemFont(ofSize: 18)
+        beforeCampaingPriceLabel.text = UIHelper.numberFormatter.string(from: NSNumber(value: product.price ?? 0))?.asTRYCurrency()
+        beforeCampaingPriceLabel.strikeThrough(true)
+        
+        NSLayoutConstraint.activate([
+            beforeCampaingPriceLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            beforeCampaingPriceLabel.leadingAnchor.constraint(equalTo: priceLabel.leadingAnchor),
+            beforeCampaingPriceLabel.trailingAnchor.constraint(equalTo: priceLabel.trailingAnchor)
         ])
     }
     
